@@ -26,11 +26,11 @@ WORKDIR /source
 
 # copy csproj and restore as distinct layers
 COPY *.sln .
-COPY SmartCharging.Api/*.csproj ./SmartCharging.Api/
+COPY *.csproj ./SmartCharging.Api/
 RUN dotnet restore -r linux-musl-arm64
 
 # copy everything else and build app
-COPY SmartCharging.Api/. ./SmartCharging.Api/
+COPY . ./SmartCharging.Api/
 WORKDIR /source/SmartCharging.Api
 RUN dotnet publish -c release -o /app -r linux-musl-arm64 --self-contained false --no-restore
 
