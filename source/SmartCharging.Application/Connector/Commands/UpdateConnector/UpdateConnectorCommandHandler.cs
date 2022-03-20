@@ -17,7 +17,7 @@ public class UpdateConnectorCommandHandler : IRequestHandler<UpdateConnectorComm
     public async Task<Unit> Handle(UpdateConnectorCommand request, CancellationToken cancellationToken)
     {
         var connector = await _unitOfWork.Repository<Domain.Entities.Connector>().Read()
-            .Where(x => x.Id == request.ByConnectorId && 
+            .Where(x => x.Id == request.ByConnectorId &&
                         x.ChargeStationId == request.ByChargeStationId &&
                         x.ChargeStation.GroupId == request.ByGroupId)
             .Include(x => x.ChargeStation)
@@ -27,9 +27,26 @@ public class UpdateConnectorCommandHandler : IRequestHandler<UpdateConnectorComm
         {
             throw new BusinessException("Connector could not be found.");
         }
-        
+
+        var group = await _unitOfWork.Repository<Domain.Entities.Group>().Read()
+            .Include(x => x.ChargeStations)
+            .ThenInclude(x => x.Connectors)
+            .FirstOrDefaultAsync(x => x.Id == request.ByGroupId, cancellationToken);
+
+        if (group == null)
+        {
+            throw new BusinessException("Group could not be found.");
+        }
+
+        if (group.CapacityInAmps < group.ChargeStations.Sum(x =>
+                x.Connectors.Where(z => z.Id != request.ByConnectorId).Sum(y => y.MaxCurrentInAmps) +
+                request.MaxCurrentInAmps))
+        {
+            throw new BusinessException("The capacity in Amps of a Group is not enough.");
+        }
+
         connector.Update(request.MaxCurrentInAmps);
-        
+
         // PS: The transaction isn't worked while using a memory database.
 
         await _unitOfWork.BeginTransactionAsync();

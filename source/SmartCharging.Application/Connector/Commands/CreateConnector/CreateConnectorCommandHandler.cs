@@ -30,6 +30,21 @@ public class CreateConnectorCommandHandler : IRequestHandler<CreateConnectorComm
         {
             throw new BusinessException("You cannot add more than 5 connectors.");
         }
+
+        var group = await _unitOfWork.Repository<Domain.Entities.Group>().Read()
+            .Include(x => x.ChargeStations)
+            .ThenInclude(x => x.Connectors)
+            .FirstOrDefaultAsync(x => x.Id == request.ByGroupId, cancellationToken);
+
+        if (group == null)
+        {
+            throw new BusinessException("Group could not be found.");
+        }
+
+        if (group.CapacityInAmps < group.ChargeStations.Sum(x => x.Connectors.Sum(y => y.MaxCurrentInAmps) + request.MaxCurrentInAmps))
+        {
+            throw new BusinessException("The capacity in Amps of a Group is not enough.");
+        }
         
         var connector = new Domain.Entities.Connector(request.MaxCurrentInAmps, request.ByChargeStationId);
         
