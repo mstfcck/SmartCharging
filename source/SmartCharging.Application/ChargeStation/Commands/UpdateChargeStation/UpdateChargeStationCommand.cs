@@ -18,5 +18,4 @@ public class UpdateChargeStationCommand : IRequest
     // Update
     
     public string Name { get; set; }
-    public int GroupId { get; set; }
 }

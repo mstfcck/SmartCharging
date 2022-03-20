@@ -19,12 +19,11 @@ public class ConnectorsController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpPost("{groupId}/chargestations{connectorId}/connectors")]
+    [HttpPost("{groupId}/chargestations/{chargeStationId}/connectors")]
     [ProducesResponseType(typeof(CreateConnectorResponse), StatusCodes.Status201Created)]
     public async Task<CreateConnectorResponse> CreateConnector(
         [FromRoute] int groupId,
         [FromRoute] int chargeStationId,
-        [FromRoute] int connectorId,
         [FromBody] CreateConnectorRequest request,
         CancellationToken cancellationToken)
     {

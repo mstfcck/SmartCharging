@@ -5,37 +5,26 @@ namespace SmartCharging.Core.Exceptions;
 public class ValidationException : Exception
 {
     public IEnumerable<ValidationFailureModel> Errors { get; }
-    
-    public ValidationException(IEnumerable<ValidationFailure> errors)
+
+    public ValidationException(IEnumerable<ValidationFailure> errors) : base("Validation Exception")
     {
         Errors = errors.Select(x => new ValidationFailureModel
         {
             Field = x.PropertyName,
-            Errors = new []
+            Errors = new[]
             {
                 x.ErrorMessage
             }
         });
     }
 
-    public ValidationException(IEnumerable<ValidationFailureModel> errors) : base(null)
+    public ValidationException(IEnumerable<ValidationFailureModel> errors) : base("Validation Exception")
     {
         Errors = errors;
     }
-    
+
     public ValidationException(string message, IEnumerable<ValidationFailureModel> errors) : base(message)
     {
         Errors = errors;
     }
-}
-
-public class ValidationFailureModel
-{
-    public ValidationFailureModel()
-    {
-        Errors = new List<string>();
-    }
-
-    public string Field { get; set; }
-    public IEnumerable<string> Errors { get; set; }
 }

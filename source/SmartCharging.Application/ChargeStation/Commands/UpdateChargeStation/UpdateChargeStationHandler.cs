@@ -1,15 +1,42 @@
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using SmartCharging.Core.Exceptions;
+using SmartCharging.Domain.Repositories;
 
 namespace SmartCharging.Application.ChargeStation.Commands.UpdateChargeStation;
 
 public class UpdateChargeStationHandler : IRequestHandler<UpdateChargeStationCommand>
 {
-    public UpdateChargeStationHandler()
+    private readonly IEntityFrameworkCoreUnitOfWork _unitOfWork;
+
+    public UpdateChargeStationHandler(IEntityFrameworkCoreUnitOfWork unitOfWork)
     {
+        _unitOfWork = unitOfWork;
     }
     
-    public Task<Unit> Handle(UpdateChargeStationCommand request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(UpdateChargeStationCommand request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var chargeStation = await _unitOfWork.Repository<Domain.Entities.ChargeStation>().Read()
+            .Where(x => x.Id == request.ByChargeStationId && x.GroupId == request.ByGroupId)
+            .FirstOrDefaultAsync(cancellationToken);
+        
+        if (chargeStation == null)
+        {
+            throw new BusinessException("Charge Station could not be found.");
+        }
+        
+        chargeStation.Update(request.Name);
+
+        // PS: The transaction isn't worked while using a memory database.
+
+        await _unitOfWork.BeginTransactionAsync();
+
+        await _unitOfWork.Repository<Domain.Entities.ChargeStation>().UpdateAsync(chargeStation, request.ByChargeStationId);
+
+        await _unitOfWork.SaveChangesAsync();
+
+        await _unitOfWork.CommitAsync();
+
+        return Unit.Value;
     }
 }

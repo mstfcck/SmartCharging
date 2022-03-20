@@ -6,12 +6,12 @@ public class UpdateGroupCommand : IRequest
 {
     public UpdateGroupCommand(int byGroupId)
     {
-        byGroupId = byGroupId;
+        ByGroupId = byGroupId;
     }
 
     // Where
     
-    public int byGroupId { get; private set; }
+    public int ByGroupId { get; private set; }
     
     // Update
     

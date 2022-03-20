@@ -6,16 +6,16 @@ public class UpdateConnectorCommand : IRequest
 {
     public UpdateConnectorCommand(int byGroupId, int byChargeStationId, int byConnectorId)
     {
-        byGroupId = byGroupId;
-        byChargeStationId = byChargeStationId;
-        byConnectorId = byConnectorId;
+        ByGroupId = byGroupId;
+        ByChargeStationId = byChargeStationId;
+        ByConnectorId = byConnectorId;
     }
     
     // Where
 
-    public int byGroupId { get; private set; }
-    public int byChargeStationId { get; private set; }
-    public int byConnectorId { get; private set; }
+    public int ByGroupId { get; private set; }
+    public int ByChargeStationId { get; private set; }
+    public int ByConnectorId { get; private set; }
     
     // Update
     

@@ -6,14 +6,14 @@ public class CreateConnectorCommand : IRequest
 {
     public CreateConnectorCommand(int byGroupId, int byChargeStationId)
     {
-        byGroupId = byGroupId;
-        byChargeStationId = byChargeStationId;
+        ByGroupId = byGroupId;
+        ByChargeStationId = byChargeStationId;
     }
     
     // Where
 
-    public int byGroupId { get; set; }
-    public int byChargeStationId { get; set; }
+    public int ByGroupId { get; set; }
+    public int ByChargeStationId { get; set; }
     
     // Update
     

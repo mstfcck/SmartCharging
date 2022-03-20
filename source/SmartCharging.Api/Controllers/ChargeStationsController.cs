@@ -26,7 +26,12 @@ public class ChargeStationsController : ControllerBase
         [FromBody] CreateChargeStationRequest request, 
         CancellationToken cancellationToken)
     {
-        await _mediator.Send(new CreateChargeStationCommand(request.Name), cancellationToken);
+        var command = new CreateChargeStationCommand(groupId)
+        {
+            Name = request.Name
+        };
+
+        await _mediator.Send(command, cancellationToken);
         return new CreateChargeStationResponse();
     }
 
@@ -40,8 +45,7 @@ public class ChargeStationsController : ControllerBase
     {
         var command = new UpdateChargeStationCommand(groupId, chargeStationId)
         {
-            Name = request.Name,
-            GroupId = request.GroupId
+            Name = request.Name
         };
 
         await _mediator.Send(command, cancellationToken);

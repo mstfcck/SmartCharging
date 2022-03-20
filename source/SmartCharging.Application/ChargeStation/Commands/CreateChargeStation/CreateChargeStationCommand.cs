@@ -4,10 +4,16 @@ namespace SmartCharging.Application.ChargeStation.Commands.CreateChargeStation;
 
 public class CreateChargeStationCommand : IRequest
 {
-    public CreateChargeStationCommand(string name)
+    public CreateChargeStationCommand(int byGroupId)
     {
-        Name = name;
+        ByGroupId = byGroupId;
     }
     
-    public string Name { get; private set; }
+    // Where
+
+    public int ByGroupId { get; private set; }
+    
+    // Create
+    
+    public string Name { get; set; }
 }

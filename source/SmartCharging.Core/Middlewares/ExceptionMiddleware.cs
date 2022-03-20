@@ -33,7 +33,11 @@ public class ExceptionMiddleware
         }
         catch (ValidationException ex)
         {
-            await BadRequest(context, ex);
+            await ValidationExceptionBadRequest(context, ex);
+        }
+        catch (BusinessException ex)
+        {
+            await BusinessExceptionBadRequest(context, ex);
         }
         catch (Exception ex)
         {
@@ -41,10 +45,41 @@ public class ExceptionMiddleware
         }
     }
 
-    private static async Task BadRequest(HttpContext context, ValidationException exception,
+    private static async Task ValidationExceptionBadRequest(HttpContext context, ValidationException exception,
         string contentType = "application/json")
     {
         var responseBody = JsonSerializer.Serialize(exception.Errors, new JsonSerializerOptions
+        {
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
+        });
+
+        await Task.Run(() =>
+        {
+            var request = context.Request;
+            var encodedPathAndQuery = request.GetEncodedPathAndQuery();
+
+            var logModel = new LogModel(request.Host.Host, request.Protocol, request.Method, request.Path,
+                encodedPathAndQuery, StatusCodes.Status400BadRequest)
+            {
+                RequestHeaders = request.Headers.ToDictionary(x => x.Key, x => (object) x.Value.ToString()),
+                RequestBody = string.Empty,
+                Data = responseBody
+            };
+
+            Logger.GetLogger(logModel).Warning(BadRequestTemplate);
+        });
+
+        context.Response.Clear();
+        context.Response.ContentType = contentType;
+        context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+        context.Response.StatusCode = StatusCodes.Status400BadRequest;
+        await context.Response.WriteAsync(responseBody, Encoding.UTF8);
+    }
+    
+    private static async Task BusinessExceptionBadRequest(HttpContext context, BusinessException exception,
+        string contentType = "application/json")
+    {
+        var responseBody = JsonSerializer.Serialize(exception.Message, new JsonSerializerOptions
         {
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
         });
