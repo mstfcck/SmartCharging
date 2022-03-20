@@ -1,25 +1,51 @@
+using Serilog;
+using SmartCharging.Api.Extensions;
+using SmartCharging.Application;
+using SmartCharging.Core.Extensions;
+using SmartCharging.Core.Middlewares;
+using SmartCharging.Infrastructure;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Services.AddApplication();
+builder.Services.AddInfrastructure();
 
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddOptions();
+builder.Services.AddLogging();
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
-var app = builder.Build();
+builder.AddLogger();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+builder.Services.AddSwagger();
+
+try
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    var app = builder.Build();
+
+    app.UseMiddleware<ExceptionMiddleware>();
+
+    // Configure the HTTP request pipeline.
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+    }
+
+    app.UseHttpsRedirection();
+    app.UseAuthorization();
+    app.MapControllers();
+
+    app.Run();
+    
+    Log.Information("Application running");
 }
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
+catch (Exception ex)
+{
+    Log.Fatal(ex, "An unhandled exception occured during bootstrapping");
+}
+finally
+{
+    Log.CloseAndFlush();
+}

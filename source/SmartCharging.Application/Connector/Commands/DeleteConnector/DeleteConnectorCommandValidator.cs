@@ -1,5 +1,11 @@
+using FluentValidation;
+using SmartCharging.Application.Group.Commands.DeleteGroup;
+
 namespace SmartCharging.Application.Connector.Commands.DeleteConnector;
 
-public class DeleteConnectorCommandValidator
+public class DeleteConnectorCommandValidator : AbstractValidator<DeleteGroupCommand>
 {
+    public DeleteConnectorCommandValidator()
+    {
+    }
 }

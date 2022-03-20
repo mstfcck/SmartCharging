@@ -1,5 +1,7 @@
+using FluentValidation;
+
 namespace SmartCharging.Application.Connector.Commands.UpdateConnector;
 
-public class UpdateConnectorCommandValidator
+public class UpdateConnectorCommandValidator : AbstractValidator<UpdateConnectorCommand>
 {
 }

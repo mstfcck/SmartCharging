@@ -6,4 +6,14 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\SmartCharging.Core\SmartCharging.Core.csproj" />
+      <ProjectReference Include="..\SmartCharging.Domain\SmartCharging.Domain.csproj" />
+      <ProjectReference Include="..\SmartCharging.Infrastructure\SmartCharging.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+    </ItemGroup>
+
 </Project>

@@ -1,6 +1,8 @@
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SmartCharging.Api.Models.Requests;
 using SmartCharging.Api.Models.Responses;
+using SmartCharging.Application.Group.Commands;
 
 namespace SmartCharging.Api.Controllers;
 
@@ -8,17 +10,22 @@ namespace SmartCharging.Api.Controllers;
 [Route("groups")]
 public class GroupsController : ControllerBase
 {
-    public GroupsController()
+    private readonly IMediator _mediator;
+    
+    public GroupsController(IMediator mediator)
     {
+        _mediator = mediator;
     }
     
     [HttpPost]
     [ProducesResponseType(typeof(CreateGroupResponse), StatusCodes.Status201Created)]
-    public async Task<CreateGroupResponse> CreateGroup(
+    public async Task CreateGroup(
         [FromBody] CreateGroupRequest request, 
         CancellationToken cancellationToken)
     {
-        return new CreateGroupResponse();
+        await _mediator.Send(new CreateGroupCommand(request.Name, request.CapacityInAmps), cancellationToken);
+        
+        // TODO: Status kodu dön
     }
 
     [HttpPut("{groupId}")]

@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartCharging.Domain", "sou
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartCharging.Infrastructure", "source\SmartCharging.Infrastructure\SmartCharging.Infrastructure.csproj", "{32D568DF-7D00-4669-BE33-E060ABF9B387}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartCharging.Core", "source\SmartCharging.Core\SmartCharging.Core.csproj", "{9ACE7198-B98A-4F4E-91A2-CAA39DB11692}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,11 +43,16 @@ Global
 		{32D568DF-7D00-4669-BE33-E060ABF9B387}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32D568DF-7D00-4669-BE33-E060ABF9B387}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32D568DF-7D00-4669-BE33-E060ABF9B387}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9ACE7198-B98A-4F4E-91A2-CAA39DB11692}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9ACE7198-B98A-4F4E-91A2-CAA39DB11692}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9ACE7198-B98A-4F4E-91A2-CAA39DB11692}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9ACE7198-B98A-4F4E-91A2-CAA39DB11692}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{96782C5B-8D56-48F2-B668-BD24149E5378} = {ABFC362D-74FD-423C-8459-E33405995C32}
 		{F26456AC-4DFD-4555-B967-B323CAC6A141} = {ABFC362D-74FD-423C-8459-E33405995C32}
 		{1BEADE29-4043-45CF-888F-1480B1814E50} = {ABFC362D-74FD-423C-8459-E33405995C32}
 		{32D568DF-7D00-4669-BE33-E060ABF9B387} = {ABFC362D-74FD-423C-8459-E33405995C32}
+		{9ACE7198-B98A-4F4E-91A2-CAA39DB11692} = {ABFC362D-74FD-423C-8459-E33405995C32}
 	EndGlobalSection
 EndGlobal
