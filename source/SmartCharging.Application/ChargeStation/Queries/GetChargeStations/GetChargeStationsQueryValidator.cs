@@ -6,5 +6,7 @@ public class GetChargeStationsQueryValidator : AbstractValidator<GetChargeStatio
 {
     public GetChargeStationsQueryValidator()
     {
+        RuleFor(x => x.GroupId)
+            .GreaterThan(0);
     }
 }

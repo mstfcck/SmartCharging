@@ -7,5 +7,7 @@ public class DeleteConnectorCommandValidator : AbstractValidator<DeleteGroupComm
 {
     public DeleteConnectorCommandValidator()
     {
+        RuleFor(x => x.GroupId)
+            .GreaterThan(0);
     }
 }

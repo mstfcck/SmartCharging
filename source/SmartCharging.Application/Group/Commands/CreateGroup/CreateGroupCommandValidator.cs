@@ -6,5 +6,10 @@ public class CreateGroupCommandValidator: AbstractValidator<CreateGroupCommand>
 {
     public CreateGroupCommandValidator()
     {
+        RuleFor(x => x.Name)
+            .NotEmpty();
+        
+        RuleFor(x => x.CapacityInAmps)
+            .GreaterThan(0);
     }
 }

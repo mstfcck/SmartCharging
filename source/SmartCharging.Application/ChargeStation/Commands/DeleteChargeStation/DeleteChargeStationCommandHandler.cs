@@ -5,11 +5,11 @@ using SmartCharging.Domain.Repositories;
 
 namespace SmartCharging.Application.ChargeStation.Commands.DeleteChargeStation;
 
-public class DeleteChargeStationHandler : IRequestHandler<DeleteChargeStationCommand>
+public class DeleteChargeStationCommandHandler : IRequestHandler<DeleteChargeStationCommand>
 {
     private readonly IEntityFrameworkCoreUnitOfWork _unitOfWork;
 
-    public DeleteChargeStationHandler(IEntityFrameworkCoreUnitOfWork unitOfWork)
+    public DeleteChargeStationCommandHandler(IEntityFrameworkCoreUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
     }

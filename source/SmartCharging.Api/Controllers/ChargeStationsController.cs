@@ -5,6 +5,7 @@ using SmartCharging.Api.Models.Responses;
 using SmartCharging.Application.ChargeStation.Commands.CreateChargeStation;
 using SmartCharging.Application.ChargeStation.Commands.DeleteChargeStation;
 using SmartCharging.Application.ChargeStation.Commands.UpdateChargeStation;
+using DeleteChargeStationCommand = SmartCharging.Application.ChargeStation.Commands.UpdateChargeStation.DeleteChargeStationCommand;
 
 namespace SmartCharging.Api.Controllers;
 
@@ -58,7 +59,7 @@ public class ChargeStationsController : ControllerBase
         [FromBody] UpdateChargeStationRequest request, 
         CancellationToken cancellationToken)
     {
-        var command = new UpdateChargeStationCommand(groupId, chargeStationId)
+        var command = new DeleteChargeStationCommand(groupId, chargeStationId)
         {
             Name = request.Name
         };
@@ -81,6 +82,6 @@ public class ChargeStationsController : ControllerBase
         [FromRoute] int chargeStationId, 
         CancellationToken cancellationToken)
     {
-        await _mediator.Send(new DeleteChargeStationCommand(groupId, chargeStationId), cancellationToken);
+        await _mediator.Send(new Application.ChargeStation.Commands.DeleteChargeStation.DeleteChargeStationCommand(groupId, chargeStationId), cancellationToken);
     }
 }

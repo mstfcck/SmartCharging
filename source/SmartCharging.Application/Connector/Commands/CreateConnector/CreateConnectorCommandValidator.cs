@@ -6,5 +6,13 @@ public class CreateConnectorCommandValidator : AbstractValidator<CreateConnector
 {
     public CreateConnectorCommandValidator()
     {
+        RuleFor(x => x.ByGroupId)
+            .GreaterThan(0);
+
+        RuleFor(x => x.ByChargeStationId)
+            .GreaterThan(0);
+
+        RuleFor(x => x.MaxCurrentInAmps)
+            .GreaterThan(0);
     }
 }

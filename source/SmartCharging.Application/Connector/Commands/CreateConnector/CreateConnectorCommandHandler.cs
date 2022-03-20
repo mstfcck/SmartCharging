@@ -18,16 +18,22 @@ public class CreateConnectorCommandHandler : IRequestHandler<CreateConnectorComm
     {
         var chargeStation = await _unitOfWork.Repository<Domain.Entities.ChargeStation>().Read()
             .Where(x => x.Id == request.ByChargeStationId && x.GroupId == request.ByGroupId)
+            .Include(x => x.Connectors)
             .FirstOrDefaultAsync(cancellationToken);
         
         if (chargeStation == null)
         {
-            throw new BusinessException("Charge Station could not be found.");
+            throw new BusinessException("Connector could not be found.");
+        }
+
+        if (chargeStation.Connectors.Count >= 5)
+        {
+            throw new BusinessException("You cannot add more than 5 connectors.");
         }
         
         var connector = new Domain.Entities.Connector(request.MaxCurrentInAmps, request.ByChargeStationId);
         
-        // PS: The transaction isn't worked while using a memory database.
+        // PS: The transaction isn't worked while using a InMemory database.
 
         await _unitOfWork.BeginTransactionAsync();
 

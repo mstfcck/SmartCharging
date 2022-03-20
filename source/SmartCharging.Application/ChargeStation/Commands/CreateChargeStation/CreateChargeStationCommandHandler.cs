@@ -5,11 +5,11 @@ using SmartCharging.Domain.Repositories;
 
 namespace SmartCharging.Application.ChargeStation.Commands.CreateChargeStation;
 
-public class CreateChargeStationHandler : IRequestHandler<CreateChargeStationCommand>
+public class CreateChargeStationCommandHandler : IRequestHandler<CreateChargeStationCommand>
 {
     private readonly IEntityFrameworkCoreUnitOfWork _unitOfWork;
 
-    public CreateChargeStationHandler(IEntityFrameworkCoreUnitOfWork unitOfWork)
+    public CreateChargeStationCommandHandler(IEntityFrameworkCoreUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
     }
@@ -22,12 +22,12 @@ public class CreateChargeStationHandler : IRequestHandler<CreateChargeStationCom
 
         if (group == null)
         {
-            throw new BusinessException("Group could not be found.");
+            throw new BusinessException("Charge Station could not be found.");
         }
 
         var chargeStation = new Domain.Entities.ChargeStation(request.Name, request.ByGroupId);
 
-        // PS: The transaction isn't worked while using a memory database.
+        // PS: The transaction isn't worked while using a InMemory database.
 
         await _unitOfWork.BeginTransactionAsync();
 

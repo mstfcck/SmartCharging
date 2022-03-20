@@ -2,15 +2,15 @@ using MediatR;
 
 namespace SmartCharging.Application.ChargeStation.Commands.UpdateChargeStation;
 
-public class UpdateChargeStationCommand : IRequest
+public class DeleteChargeStationCommand : IRequest
 {
-    public UpdateChargeStationCommand(int byGroupId, int byChargeStationId)
+    public DeleteChargeStationCommand(int byGroupId, int byChargeStationId)
     {
         ByGroupId = byGroupId;
         ByChargeStationId = byChargeStationId;
     }
 
-    // Filter
+    // Where
 
     public int ByGroupId { get; private set; }
     public int ByChargeStationId { get; private set; }
