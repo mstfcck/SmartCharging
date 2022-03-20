@@ -19,6 +19,13 @@ public class ChargeStationsController : ControllerBase
         _mediator = mediator;
     }
     
+    /// <summary>
+    /// Create a charge station.
+    /// </summary>
+    /// <param name="groupId">Group Id</param>
+    /// <param name="request"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpPost("{groupId}/chargestations")]
     [ProducesResponseType(typeof(CreateChargeStationResponse), StatusCodes.Status201Created)]
     public async Task<CreateChargeStationResponse> CreateChargeStation(
@@ -35,6 +42,14 @@ public class ChargeStationsController : ControllerBase
         return new CreateChargeStationResponse();
     }
 
+    /// <summary>
+    /// Update a charge station.
+    /// </summary>
+    /// <param name="groupId">Group Id</param>
+    /// <param name="chargeStationId">Charge Station Id</param>
+    /// <param name="request"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpPut("{groupId}/chargestations/{chargeStationId}")]
     [ProducesResponseType(typeof(UpdateChargeStationResponse), StatusCodes.Status200OK)]
     public async Task<UpdateChargeStationResponse> UpdateChargeStation(
@@ -53,6 +68,12 @@ public class ChargeStationsController : ControllerBase
         return new UpdateChargeStationResponse();
     }
 
+    /// <summary>
+    /// Delete a charge station.
+    /// </summary>
+    /// <param name="groupId">Group Id</param>
+    /// <param name="chargeStationId">Charge Station Id</param>
+    /// <param name="cancellationToken"></param>
     [HttpDelete("{groupId}/chargestations/{chargeStationId}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task DeleteChargeStation(

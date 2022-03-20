@@ -19,6 +19,14 @@ public class ConnectorsController : ControllerBase
         _mediator = mediator;
     }
 
+    /// <summary>
+    /// Create a connector.
+    /// </summary>
+    /// <param name="groupId">Group Id</param>
+    /// <param name="chargeStationId">Charge Station Id</param>
+    /// <param name="request"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpPost("{groupId}/chargestations/{chargeStationId}/connectors")]
     [ProducesResponseType(typeof(CreateConnectorResponse), StatusCodes.Status201Created)]
     public async Task<CreateConnectorResponse> CreateConnector(
@@ -37,6 +45,15 @@ public class ConnectorsController : ControllerBase
         return new CreateConnectorResponse();
     }
 
+    /// <summary>
+    /// Update a connector.
+    /// </summary>
+    /// <param name="groupId">Group Id</param>
+    /// <param name="chargeStationId">Charge Station Id</param>
+    /// <param name="connectorId">Connector Id</param>
+    /// <param name="request"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpPut("{groupId}/chargestations/{chargeStationId}/connectors/{connectorId}")]
     [ProducesResponseType(typeof(UpdateConnectorResponse), StatusCodes.Status200OK)]
     public async Task<UpdateConnectorResponse> UpdateConnector(
@@ -56,6 +73,13 @@ public class ConnectorsController : ControllerBase
         return new UpdateConnectorResponse();
     }
 
+    /// <summary>
+    /// Delete a connector.
+    /// </summary>
+    /// <param name="groupId">Group Id</param>
+    /// <param name="chargeStationId">Charge Station Id</param>
+    /// <param name="connectorId">Connector Id</param>
+    /// <param name="cancellationToken"></param>
     [HttpDelete("{groupId}/chargestations/{chargeStationId}/connectors/{connectorId}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task DeleteConnector(

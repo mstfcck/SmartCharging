@@ -13,16 +13,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddOptions();
 builder.Services.AddLogging();
 
-// // Sqlite
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlite("Data Source=SmartCharging.sqlite", optionsBuilder =>
-    {
-        optionsBuilder.MigrationsAssembly("SmartCharging.Infrastructure");
-    }));
-
-// // InMemoryDatabase:
-// builder.Services.AddDbContext<ApplicationDbContext>(options => 
-//     options.UseInMemoryDatabase("SmartCharging"));
+builder.AddDatabaseProvider();
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure();
@@ -44,10 +35,16 @@ try
 
     if (!serviceScope.ServiceProvider.GetService<ApplicationDbContext>().Database.IsInMemory())
     {
-        serviceScope.ServiceProvider.GetService<ApplicationDbContext>()?.Database.EnsureCreated();
+        if (serviceScope.ServiceProvider.GetService<ApplicationDbContext>().Database.EnsureCreated())
+        {
+            Log.Information("Database is created");
+        }
     }
-    
-    // Configure the HTTP request pipeline.
+    else
+    {
+        Log.Information("Database is working as InMemory");
+    }
+
     if (app.Environment.IsDevelopment())
     {
         app.UseSwagger();

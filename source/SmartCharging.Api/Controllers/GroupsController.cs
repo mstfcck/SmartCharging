@@ -19,6 +19,11 @@ public class GroupsController : ControllerBase
         _mediator = mediator;
     }
     
+    /// <summary>
+    /// Create a group.
+    /// </summary>
+    /// <param name="request"></param>
+    /// <param name="cancellationToken"></param>
     [HttpPost]
     [ProducesResponseType(typeof(CreateGroupResponse), StatusCodes.Status201Created)]
     public async Task CreateGroup(
@@ -30,6 +35,13 @@ public class GroupsController : ControllerBase
         // TODO: Status kodu dön
     }
 
+    /// <summary>
+    /// Update a group.
+    /// </summary>
+    /// <param name="groupId">Group Id</param>
+    /// <param name="request"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpPut("{groupId}")]
     [ProducesResponseType(typeof(UpdateGroupResponse), StatusCodes.Status200OK)]
     public async Task<UpdateGroupResponse> UpdateGroup(
@@ -48,6 +60,11 @@ public class GroupsController : ControllerBase
         return new UpdateGroupResponse();
     }
 
+    /// <summary>
+    /// Delete a group.
+    /// </summary>
+    /// <param name="groupId">Group Id</param>
+    /// <param name="cancellationToken"></param>
     [HttpDelete("{groupId}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task DeleteGroup(

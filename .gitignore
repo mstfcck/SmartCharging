@@ -496,6 +496,8 @@ fabric.properties
 
 # Sqlite
 *.sqlite
+*.sqlite-shm
+*.sqlite-wal
 
 # MacOS
 .DS_store
