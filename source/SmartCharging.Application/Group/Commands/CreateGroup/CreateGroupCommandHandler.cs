@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace SmartCharging.Application.Group.Commands;
+namespace SmartCharging.Application.Group.Commands.CreateGroup;
 
 public class CreateGroupCommandHandler : IRequestHandler<CreateGroupCommand>
 {

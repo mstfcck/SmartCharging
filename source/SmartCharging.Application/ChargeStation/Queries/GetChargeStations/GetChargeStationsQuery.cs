@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace SmartCharging.Application.ChargeStation.Queries.GetChargeStationsQuery;
+namespace SmartCharging.Application.ChargeStation.Queries.GetChargeStations;
 
 public class GetChargeStationsQuery : IRequest<GetChargeStationsDTO>
 {

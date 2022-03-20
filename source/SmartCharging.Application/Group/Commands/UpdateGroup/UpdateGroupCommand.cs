@@ -4,14 +4,14 @@ namespace SmartCharging.Application.Group.Commands.UpdateGroup;
 
 public class UpdateGroupCommand : IRequest
 {
-    public UpdateGroupCommand(int filterGroupId)
+    public UpdateGroupCommand(int byGroupId)
     {
-        FilterGroupId = filterGroupId;
+        byGroupId = byGroupId;
     }
 
-    // Filter
+    // Where
     
-    public int FilterGroupId { get; private set; }
+    public int byGroupId { get; private set; }
     
     // Update
     

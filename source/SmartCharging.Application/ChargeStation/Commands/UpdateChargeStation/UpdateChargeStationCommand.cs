@@ -4,16 +4,16 @@ namespace SmartCharging.Application.ChargeStation.Commands.UpdateChargeStation;
 
 public class UpdateChargeStationCommand : IRequest
 {
-    public UpdateChargeStationCommand(int filterGroupId, int filterChargeStationId)
+    public UpdateChargeStationCommand(int byGroupId, int byChargeStationId)
     {
-        FilterGroupId = filterGroupId;
-        FilterChargeStationId = filterChargeStationId;
+        ByGroupId = byGroupId;
+        ByChargeStationId = byChargeStationId;
     }
 
     // Filter
 
-    public int FilterGroupId { get; private set; }
-    public int FilterChargeStationId { get; private set; }
+    public int ByGroupId { get; private set; }
+    public int ByChargeStationId { get; private set; }
     
     // Update
     

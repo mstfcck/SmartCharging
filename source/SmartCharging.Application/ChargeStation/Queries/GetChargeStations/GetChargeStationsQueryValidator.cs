@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace SmartCharging.Application.ChargeStation.Queries.GetChargeStationsQuery;
+namespace SmartCharging.Application.ChargeStation.Queries.GetChargeStations;
 
 public class GetChargeStationsQueryValidator : AbstractValidator<GetChargeStationsQuery>
 {

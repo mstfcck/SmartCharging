@@ -4,12 +4,18 @@ namespace SmartCharging.Application.Connector.Commands.CreateConnector;
 
 public class CreateConnectorCommand : IRequest
 {
-    public CreateConnectorCommand(int maxCurrentInAmps, int chargeStationId)
+    public CreateConnectorCommand(int byGroupId, int byChargeStationId)
     {
-        MaxCurrentInAmps = maxCurrentInAmps;
-        ChargeStationId = chargeStationId;
+        byGroupId = byGroupId;
+        byChargeStationId = byChargeStationId;
     }
     
-    public int MaxCurrentInAmps  { get; private set; }
-    public int ChargeStationId { get; private set; }
+    // Where
+
+    public int byGroupId { get; set; }
+    public int byChargeStationId { get; set; }
+    
+    // Update
+    
+    public int MaxCurrentInAmps  { get; set; }
 }

@@ -1,6 +1,10 @@
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SmartCharging.Api.Models.Requests;
 using SmartCharging.Api.Models.Responses;
+using SmartCharging.Application.ChargeStation.Commands.CreateChargeStation;
+using SmartCharging.Application.ChargeStation.Commands.DeleteChargeStation;
+using SmartCharging.Application.ChargeStation.Commands.UpdateChargeStation;
 
 namespace SmartCharging.Api.Controllers;
 
@@ -8,16 +12,21 @@ namespace SmartCharging.Api.Controllers;
 [Route("groups")]
 public class ChargeStationsController : ControllerBase
 {
-    public ChargeStationsController()
+    private readonly IMediator _mediator;
+    
+    public ChargeStationsController(IMediator mediator)
     {
+        _mediator = mediator;
     }
     
     [HttpPost("{groupId}/chargestations")]
     [ProducesResponseType(typeof(CreateChargeStationResponse), StatusCodes.Status201Created)]
     public async Task<CreateChargeStationResponse> CreateChargeStation(
+        [FromRoute] int groupId,
         [FromBody] CreateChargeStationRequest request, 
         CancellationToken cancellationToken)
     {
+        await _mediator.Send(new CreateChargeStationCommand(request.Name), cancellationToken);
         return new CreateChargeStationResponse();
     }
 
@@ -29,6 +38,14 @@ public class ChargeStationsController : ControllerBase
         [FromBody] UpdateChargeStationRequest request, 
         CancellationToken cancellationToken)
     {
+        var command = new UpdateChargeStationCommand(groupId, chargeStationId)
+        {
+            Name = request.Name,
+            GroupId = request.GroupId
+        };
+
+        await _mediator.Send(command, cancellationToken);
+        
         return new UpdateChargeStationResponse();
     }
 
@@ -39,5 +56,6 @@ public class ChargeStationsController : ControllerBase
         [FromRoute] int chargeStationId, 
         CancellationToken cancellationToken)
     {
+        await _mediator.Send(new DeleteChargeStationCommand(groupId, chargeStationId), cancellationToken);
     }
 }

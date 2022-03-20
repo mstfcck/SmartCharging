@@ -1,6 +1,10 @@
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SmartCharging.Api.Models.Requests;
 using SmartCharging.Api.Models.Responses;
+using SmartCharging.Application.Connector.Commands.CreateConnector;
+using SmartCharging.Application.Connector.Commands.DeleteConnector;
+using SmartCharging.Application.Connector.Commands.UpdateConnector;
 
 namespace SmartCharging.Api.Controllers;
 
@@ -8,16 +12,29 @@ namespace SmartCharging.Api.Controllers;
 [Route("groups")]
 public class ConnectorsController : ControllerBase
 {
-    public ConnectorsController()
+    private readonly IMediator _mediator;
+    
+    public ConnectorsController(IMediator mediator)
     {
+        _mediator = mediator;
     }
 
     [HttpPost("{groupId}/chargestations{connectorId}/connectors")]
     [ProducesResponseType(typeof(CreateConnectorResponse), StatusCodes.Status201Created)]
     public async Task<CreateConnectorResponse> CreateConnector(
+        [FromRoute] int groupId,
+        [FromRoute] int chargeStationId,
+        [FromRoute] int connectorId,
         [FromBody] CreateConnectorRequest request,
         CancellationToken cancellationToken)
     {
+        var command = new CreateConnectorCommand(groupId, chargeStationId)
+        {
+            MaxCurrentInAmps = request.MaxCurrentInAmps
+        };
+
+        await _mediator.Send(command, cancellationToken);
+        
         return new CreateConnectorResponse();
     }
 
@@ -30,6 +47,13 @@ public class ConnectorsController : ControllerBase
         [FromBody] UpdateConnectorRequest request,
         CancellationToken cancellationToken)
     {
+        var command = new UpdateConnectorCommand(groupId, chargeStationId, connectorId)
+        {
+            MaxCurrentInAmps = request.MaxCurrentInAmps
+        };
+
+        await _mediator.Send(command, cancellationToken);
+        
         return new UpdateConnectorResponse();
     }
 
@@ -41,5 +65,6 @@ public class ConnectorsController : ControllerBase
         [FromRoute] int connectorId,
         CancellationToken cancellationToken)
     {
+        await _mediator.Send(new DeleteConnectorCommand(groupId, chargeStationId, connectorId), cancellationToken);
     }
 }

@@ -4,5 +4,10 @@ namespace SmartCharging.Application.Group.Commands.DeleteGroup;
 
 public class DeleteGroupCommand : IRequest
 {
-    public int GroupId { get; set; }
+    public DeleteGroupCommand(int groupId)
+    {
+        GroupId = groupId;
+    }
+    
+    public int GroupId { get; private set; }
 }

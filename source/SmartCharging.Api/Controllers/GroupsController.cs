@@ -2,7 +2,9 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SmartCharging.Api.Models.Requests;
 using SmartCharging.Api.Models.Responses;
-using SmartCharging.Application.Group.Commands;
+using SmartCharging.Application.Group.Commands.CreateGroup;
+using SmartCharging.Application.Group.Commands.DeleteGroup;
+using SmartCharging.Application.Group.Commands.UpdateGroup;
 
 namespace SmartCharging.Api.Controllers;
 
@@ -31,9 +33,18 @@ public class GroupsController : ControllerBase
     [HttpPut("{groupId}")]
     [ProducesResponseType(typeof(UpdateGroupResponse), StatusCodes.Status200OK)]
     public async Task<UpdateGroupResponse> UpdateGroup(
+        [FromRoute] int groupId,
         [FromBody] UpdateGroupRequest request, 
         CancellationToken cancellationToken)
     {
+        var command = new UpdateGroupCommand(groupId)
+        {
+            Name = request.Name,
+            CapacityInAmps = request.CapacityInAmps
+        };
+
+        await _mediator.Send(command, cancellationToken);
+
         return new UpdateGroupResponse();
     }
 
@@ -43,5 +54,6 @@ public class GroupsController : ControllerBase
         [FromRoute] int groupId, 
         CancellationToken cancellationToken)
     {
+        await _mediator.Send(new DeleteGroupCommand(groupId), cancellationToken);
     }
 }
