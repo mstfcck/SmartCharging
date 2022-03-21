@@ -1,6 +1,4 @@
-﻿# Guide
-
-# Smart Charging
+﻿# Smart Charging
 
 ## Guide
 
@@ -15,7 +13,8 @@ Here are default ports:
 The project runs InMemory database as default. If you want to change that update Provider in "appsettings.Development.json".
 
 Provider:
-- InMemory 
+
+- InMemory
 - SqlServer
 
 PS: If you have a SqlServer and want to run on it please use docker-compose to run SqlServer on Docker or use your own database connection. After doing that please make sure that you updated the "DefaultConnection" in "appsettings.Development.json".
