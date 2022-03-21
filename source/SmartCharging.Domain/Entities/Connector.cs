@@ -2,12 +2,13 @@ using SmartCharging.Domain.Repositories;
 
 namespace SmartCharging.Domain.Entities;
 
-public partial class Connector : IEntityFramework
+public partial class Connector : IEntityFramework, IHasConcurrencyToken
 {
-    public int Id { get; set; }
-    public int MaxCurrentInAmps  { get; set; }
-    public int ChargeStationId { get; set; }
-    public ChargeStation ChargeStation { get; set; }
+    public int Id { get; private set; }
+    public int MaxCurrentInAmps { get; private set; }
+    public int ChargeStationId { get; private set; }
+    public ChargeStation ChargeStation { get; private set; }
+    public long RowVersion { get; set; }
 }
 
 public partial class Connector
