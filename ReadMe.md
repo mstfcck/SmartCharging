@@ -12,13 +12,13 @@ Here are default ports:
 
 `> https://localhost:3434/swagger`
 
-The project runs InMemory database as default. If you want to change that update Provider in 'appsettings.Development.json'.
+The project runs InMemory database as default. If you want to change that update Provider in "appsettings.Development.json".
 
 Provider:
 - InMemory 
 - SqlServer
 
-PS: If you have a SqlServer and want to run on it please use docker-compose to run SqlServer on Docker or use your own database connection. After doing that please make sure that you updated the 'DefaultConfiguration' in 'appsettings.Development.json'.
+PS: If you have a SqlServer and want to run on it please use docker-compose to run SqlServer on Docker or use your own database connection. After doing that please make sure that you updated the "DefaultConnection" in "appsettings.Development.json".
 
 ### Database Migrations
 
