@@ -5,7 +5,7 @@ using SmartCharging.Domain.Repositories;
 
 namespace SmartCharging.Application.Connector.Commands.CreateConnector;
 
-public class CreateConnectorCommandHandler : IRequestHandler<CreateConnectorCommand>
+public class CreateConnectorCommandHandler : IRequestHandler<CreateConnectorCommand, CreateConnectorDTO>
 {
     private readonly IEntityFrameworkCoreUnitOfWork _unitOfWork;
 
@@ -14,7 +14,7 @@ public class CreateConnectorCommandHandler : IRequestHandler<CreateConnectorComm
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<Unit> Handle(CreateConnectorCommand request, CancellationToken cancellationToken)
+    public async Task<CreateConnectorDTO> Handle(CreateConnectorCommand request, CancellationToken cancellationToken)
     {
         var chargeStation = await _unitOfWork.Repository<Domain.Entities.ChargeStation>().Read()
             .Where(x => x.Id == request.ByChargeStationId && x.GroupId == request.ByGroupId)
@@ -58,6 +58,11 @@ public class CreateConnectorCommandHandler : IRequestHandler<CreateConnectorComm
 
         await _unitOfWork.CommitAsync();
 
-        return Unit.Value;
+        var result = new CreateConnectorDTO
+        {
+            Id = group.Id
+        };
+
+        return result;
     }
 }

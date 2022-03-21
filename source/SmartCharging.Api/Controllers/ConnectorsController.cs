@@ -28,8 +28,8 @@ public class ConnectorsController : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpPost("{groupId}/chargestations/{chargeStationId}/connectors")]
-    [ProducesResponseType(typeof(CreateConnectorResponse), StatusCodes.Status201Created)]
-    public async Task<CreateConnectorResponse> CreateConnector(
+    [ProducesResponseType(typeof(Response<CreateConnectorResponse>), StatusCodes.Status201Created)]
+    public async Task<Response<CreateConnectorResponse>> CreateConnector(
         [FromRoute] int groupId,
         [FromRoute] int chargeStationId,
         [FromBody] CreateConnectorRequest request,
@@ -40,9 +40,9 @@ public class ConnectorsController : ControllerBase
             MaxCurrentInAmps = request.MaxCurrentInAmps
         };
 
-        await _mediator.Send(command, cancellationToken);
+        var result = _mediator.Send(command, cancellationToken);
         
-        return new CreateConnectorResponse();
+        return new Response<CreateConnectorResponse>(new CreateConnectorResponse(result.Id));
     }
 
     /// <summary>
@@ -55,8 +55,8 @@ public class ConnectorsController : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpPut("{groupId}/chargestations/{chargeStationId}/connectors/{connectorId}")]
-    [ProducesResponseType(typeof(UpdateConnectorResponse), StatusCodes.Status200OK)]
-    public async Task<UpdateConnectorResponse> UpdateConnector(
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task UpdateConnector(
         [FromRoute] int groupId,
         [FromRoute] int chargeStationId,
         [FromRoute] int connectorId,
@@ -69,8 +69,6 @@ public class ConnectorsController : ControllerBase
         };
 
         await _mediator.Send(command, cancellationToken);
-        
-        return new UpdateConnectorResponse();
     }
 
     /// <summary>

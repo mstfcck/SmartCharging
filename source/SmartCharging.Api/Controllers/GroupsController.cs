@@ -25,14 +25,13 @@ public class GroupsController : ControllerBase
     /// <param name="request"></param>
     /// <param name="cancellationToken"></param>
     [HttpPost]
-    [ProducesResponseType(typeof(CreateGroupResponse), StatusCodes.Status201Created)]
-    public async Task CreateGroup(
+    [ProducesResponseType(typeof(Response<CreateGroupResponse>), StatusCodes.Status200OK)]
+    public async Task<Response<CreateGroupResponse>> CreateGroup(
         [FromBody] CreateGroupRequest request, 
         CancellationToken cancellationToken)
     {
-        await _mediator.Send(new CreateGroupCommand(request.Name, request.CapacityInAmps), cancellationToken);
-        
-        // TODO: Status kodu dön
+        var result = await _mediator.Send(new CreateGroupCommand(request.Name, request.CapacityInAmps), cancellationToken);
+        return new Response<CreateGroupResponse>(new CreateGroupResponse(result.Id));
     }
 
     /// <summary>
@@ -43,8 +42,8 @@ public class GroupsController : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpPut("{groupId}")]
-    [ProducesResponseType(typeof(UpdateGroupResponse), StatusCodes.Status200OK)]
-    public async Task<UpdateGroupResponse> UpdateGroup(
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task UpdateGroup(
         [FromRoute] int groupId,
         [FromBody] UpdateGroupRequest request, 
         CancellationToken cancellationToken)
@@ -56,8 +55,6 @@ public class GroupsController : ControllerBase
         };
 
         await _mediator.Send(command, cancellationToken);
-
-        return new UpdateGroupResponse();
     }
 
     /// <summary>

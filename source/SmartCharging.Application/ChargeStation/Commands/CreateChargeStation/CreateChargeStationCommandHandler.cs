@@ -5,7 +5,7 @@ using SmartCharging.Domain.Repositories;
 
 namespace SmartCharging.Application.ChargeStation.Commands.CreateChargeStation;
 
-public class CreateChargeStationCommandHandler : IRequestHandler<CreateChargeStationCommand>
+public class CreateChargeStationCommandHandler : IRequestHandler<CreateChargeStationCommand, CreateChargeStationDTO>
 {
     private readonly IEntityFrameworkCoreUnitOfWork _unitOfWork;
 
@@ -14,7 +14,7 @@ public class CreateChargeStationCommandHandler : IRequestHandler<CreateChargeSta
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<Unit> Handle(CreateChargeStationCommand request, CancellationToken cancellationToken)
+    public async Task<CreateChargeStationDTO> Handle(CreateChargeStationCommand request, CancellationToken cancellationToken)
     {
         var group = await _unitOfWork.Repository<Domain.Entities.Group>().Read()
             .Where(x => x.Id == request.ByGroupId)
@@ -37,6 +37,11 @@ public class CreateChargeStationCommandHandler : IRequestHandler<CreateChargeSta
 
         await _unitOfWork.CommitAsync();
 
-        return Unit.Value;
+        var result = new CreateChargeStationDTO
+        {
+            Id = group.Id
+        };
+
+        return result;
     }
 }

@@ -1,6 +1,11 @@
 namespace SmartCharging.Api.Models.Requests;
 
-public class BaseResponse<T>
+public class Response<TObject>
 {
-    public T Result { get; set; }
+    public Response(TObject result)
+    {
+        Result = result;
+    }
+
+    public TObject Result { get; }
 }

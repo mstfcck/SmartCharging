@@ -28,8 +28,8 @@ public class ChargeStationsController : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpPost("{groupId}/chargestations")]
-    [ProducesResponseType(typeof(CreateChargeStationResponse), StatusCodes.Status201Created)]
-    public async Task<CreateChargeStationResponse> CreateChargeStation(
+    [ProducesResponseType(typeof(Response<CreateChargeStationResponse>), StatusCodes.Status200OK)]
+    public async Task<Response<CreateChargeStationResponse>> CreateChargeStation(
         [FromRoute] int groupId,
         [FromBody] CreateChargeStationRequest request, 
         CancellationToken cancellationToken)
@@ -39,8 +39,9 @@ public class ChargeStationsController : ControllerBase
             Name = request.Name
         };
 
-        await _mediator.Send(command, cancellationToken);
-        return new CreateChargeStationResponse();
+        var result = await _mediator.Send(command, cancellationToken);
+        
+        return new Response<CreateChargeStationResponse>(new CreateChargeStationResponse(result.Id));
     }
 
     /// <summary>
@@ -52,8 +53,8 @@ public class ChargeStationsController : ControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     [HttpPut("{groupId}/chargestations/{chargeStationId}")]
-    [ProducesResponseType(typeof(UpdateChargeStationResponse), StatusCodes.Status200OK)]
-    public async Task<UpdateChargeStationResponse> UpdateChargeStation(
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task UpdateChargeStation(
         [FromRoute] int groupId, 
         [FromRoute] int chargeStationId, 
         [FromBody] UpdateChargeStationRequest request, 
@@ -65,8 +66,6 @@ public class ChargeStationsController : ControllerBase
         };
 
         await _mediator.Send(command, cancellationToken);
-        
-        return new UpdateChargeStationResponse();
     }
 
     /// <summary>
@@ -82,6 +81,6 @@ public class ChargeStationsController : ControllerBase
         [FromRoute] int chargeStationId, 
         CancellationToken cancellationToken)
     {
-        await _mediator.Send(new Application.ChargeStation.Commands.DeleteChargeStation.DeleteChargeStationCommand(groupId, chargeStationId), cancellationToken);
+        await _mediator.Send(new DeleteChargeStationCommand(groupId, chargeStationId), cancellationToken);
     }
 }

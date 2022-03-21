@@ -3,7 +3,7 @@ using MediatR;
 
 namespace SmartCharging.Application.Group.Commands.CreateGroup;
 
-public class CreateGroupCommand : IRequest
+public class CreateGroupCommand : IRequest<CreateGroupDTO>
 {
     public CreateGroupCommand(string name, int capacityInAmps)
     {
@@ -13,4 +13,9 @@ public class CreateGroupCommand : IRequest
     
     public string Name { get; private set; }
     public int CapacityInAmps  { get; private set; }
+}
+
+public class CreateGroupDTO
+{
+    public int Id { get; set; }
 }

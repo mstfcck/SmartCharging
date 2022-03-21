@@ -2,7 +2,7 @@ using MediatR;
 
 namespace SmartCharging.Application.ChargeStation.Commands.CreateChargeStation;
 
-public class CreateChargeStationCommand : IRequest
+public class CreateChargeStationCommand : IRequest<CreateChargeStationDTO>
 {
     public CreateChargeStationCommand(int byGroupId)
     {
@@ -16,4 +16,9 @@ public class CreateChargeStationCommand : IRequest
     // Create
     
     public string Name { get; set; }
+}
+
+public class CreateChargeStationDTO
+{
+    public int Id { get; set; }
 }

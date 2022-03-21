@@ -2,7 +2,7 @@ using MediatR;
 
 namespace SmartCharging.Application.Connector.Commands.CreateConnector;
 
-public class CreateConnectorCommand : IRequest
+public class CreateConnectorCommand : IRequest<CreateConnectorDTO>
 {
     public CreateConnectorCommand(int byGroupId, int byChargeStationId)
     {
@@ -18,4 +18,9 @@ public class CreateConnectorCommand : IRequest
     // Update
     
     public int MaxCurrentInAmps  { get; set; }
+}
+
+public class CreateConnectorDTO
+{
+    public int Id { get; set; }
 }
