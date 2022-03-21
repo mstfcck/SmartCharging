@@ -13,5 +13,9 @@ public class ConnectorConfiguration : IEntityTypeConfiguration<Connector>
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id).HasColumnName("Id");
         builder.Property(x => x.MaxCurrentInAmps).HasColumnName("MaxCurrentInAmps");
+        
+        builder.Property(x => x.RowVersion)
+            .IsConcurrencyToken()
+            .ValueGeneratedOnAddOrUpdate();
     }
 }

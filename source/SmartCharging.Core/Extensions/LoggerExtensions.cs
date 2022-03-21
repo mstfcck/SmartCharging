@@ -12,11 +12,13 @@ public static class LoggerExtensions
     public static void AddLogger(this WebApplicationBuilder builder)
     {
         builder.Logging.ClearProviders();
+
+        builder.Host.UseSerilog();
         
         Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Debug()
             .WriteTo.Console()
-            .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri("http://localhost:9200"))
+            .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(builder.Configuration["LogSettings:ElasticSearchConnection"]))
             {
                 AutoRegisterTemplate = true,
                 AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv7

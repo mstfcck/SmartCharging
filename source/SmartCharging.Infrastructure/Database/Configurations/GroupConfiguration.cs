@@ -15,6 +15,10 @@ public class GroupConfiguration : IEntityTypeConfiguration<Group>
         builder.Property(x => x.Name).HasColumnName("Name");
         builder.Property(x => x.CapacityInAmps).HasColumnName("CapacityInAmps");
         
+        builder.Property(x => x.RowVersion)
+            .IsConcurrencyToken()
+            .ValueGeneratedOnAddOrUpdate();
+        
         builder
             .HasMany(x => x.ChargeStations)
             .WithOne(x => x.Group)

@@ -14,6 +14,10 @@ public class ChargeStationConfiguration : IEntityTypeConfiguration<ChargeStation
         builder.Property(x => x.Id).HasColumnName("Id");
         builder.Property(x => x.Name).HasColumnName("Name");
         
+        builder.Property(x => x.RowVersion)
+            .IsConcurrencyToken()
+            .ValueGeneratedOnAddOrUpdate();
+        
         builder
             .HasMany(x => x.Connectors)
             .WithOne(x => x.ChargeStation)

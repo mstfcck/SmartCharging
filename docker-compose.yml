@@ -1,19 +1,24 @@
 services:
-  # smart-charging-api:
-  #   container_name: smart-charging-api
-  #   build:
-  #     context: .
-  #     dockerfile: ./source/SmartCharging.Api/Dockerfile
-  #   ports:
-  #     - "80:80"
-  #     - "443:443"
-  #   networks:
-  #     - smartcharging
-  sqlserver:
-    image: "mcr.microsoft.com/mssql/server:2019-CU15-ubuntu-20.04"
-    environment:
-      SA_PASSWORD: "sa"
-      ACCEPT_EULA: "Y"
+
+# Remove comment to start-up 'smart-charging-api' on docker.
+#   smart-charging-api:
+#     container_name: smart-charging-api
+#     build:
+#       context: .
+#       dockerfile: ./source/SmartCharging.Api/Dockerfile
+#     ports:
+#       - "80:80"
+#       - "443:443"
+#     networks:
+#       - smartcharging
+
+# Remove comment to start-up 'sqlserver' on docker.
+#  sqlserver:
+#    image: "mcr.microsoft.com/mssql/server:2019-CU15-ubuntu-20.04"
+#    environment:
+#      SA_PASSWORD: "sa"
+#      ACCEPT_EULA: "Y"
+  
   elasticsearch:
     container_name: elasticsearch
     image: docker.elastic.co/elasticsearch/elasticsearch:7.9.2
@@ -28,6 +33,7 @@ services:
       - discovery.type=single-node
     networks:
       - smart-charging-api
+  
   kibana:
     container_name: kibana
     image: docker.elastic.co/kibana/kibana:7.9.2
@@ -39,9 +45,10 @@ services:
       - ELASTICSEARCH_URL=http://localhost:9200
     networks:
       - smart-charging-api
+
 networks:
   smart-charging-api:
     driver: bridge
+
 volumes:
-  redis-data:
   elasticsearch-data:

@@ -13,6 +13,8 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddOptions();
 builder.Services.AddLogging();
 
+builder.AddLogger();
+
 builder.AddDatabaseProvider();
 
 builder.Services.AddApplication();
@@ -20,8 +22,6 @@ builder.Services.AddInfrastructure();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-
-builder.AddLogger();
 
 builder.Services.AddSwagger();
 
@@ -31,12 +31,13 @@ try
 
     app.UseMiddleware<ExceptionMiddleware>();
 
-    using var serviceScope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
+    await using var serviceScope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateAsyncScope();
 
     if (!serviceScope.ServiceProvider.GetService<ApplicationDbContext>().Database.IsInMemory())
     {
-        if (serviceScope.ServiceProvider.GetService<ApplicationDbContext>().Database.EnsureCreated())
+        if ((await serviceScope.ServiceProvider.GetService<ApplicationDbContext>().Database.EnsureCreatedAsync()))
         {
+            await serviceScope.ServiceProvider.GetService<ApplicationDbContext>().Database.MigrateAsync();
             Log.Information("Database is created");
         }
     }

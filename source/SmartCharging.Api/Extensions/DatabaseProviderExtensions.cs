@@ -11,9 +11,9 @@ public static class DatabaseProviderExtensions
 
         switch (provider)
         {
-            case DatabaseProvider.Sqlite:
+            case DatabaseProvider.SqlServer:
                 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                    options.UseSqlite(builder.Configuration["DatabaseSettings:SqliteConnection"],
+                    options.UseSqlServer(builder.Configuration["DatabaseSettings:DefaultConnection"],
                         optionsBuilder => { optionsBuilder.MigrationsAssembly("SmartCharging.Infrastructure"); }));
                 break;
             case DatabaseProvider.InMemory:

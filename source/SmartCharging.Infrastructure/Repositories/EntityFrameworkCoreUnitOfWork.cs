@@ -1,5 +1,5 @@
-using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
+using SmartCharging.Core.Exceptions;
 using SmartCharging.Domain.Repositories;
 
 namespace SmartCharging.Infrastructure.Repositories;
@@ -42,44 +42,54 @@ public class EntityFrameworkCoreUnitOfWork : IEntityFrameworkCoreUnitOfWork
     {
         try
         {
+            foreach (var entity in _factory.GetDbContext().ChangeTracker.Entries()
+                         .Where(x => x.State is EntityState.Added or EntityState.Modified && x.Entity is IHasConcurrencyToken)
+                         .Select(x => x.Entity as IHasConcurrencyToken))
+            {
+                entity.RowVersion = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+            }
+            
             return _factory.GetDbContext().SaveChanges();
         }
         catch (DbUpdateConcurrencyException exception)
         {
-            Debug.WriteLine($"{exception.Message}");
+            throw new DatabaseException("DbUpdate Concurrency Exception", exception);
         }
         catch (DbUpdateException exception)
         {
-            Debug.WriteLine($"{exception.Message}");
+            throw new DatabaseException("DbUpdate Exception", exception);
         }
         catch (Exception exception)
         {
-            Debug.WriteLine($"{exception.Message}");
+            throw new DatabaseException("Db Exception", exception);
         }
-
-        return 0;
     }
 
     public async Task<int> SaveChangesAsync()
     {
         try
         {
+            foreach (var entity in _factory.GetDbContext().ChangeTracker.Entries()
+                         .Where(x => x.State is EntityState.Added or EntityState.Modified && x.Entity is IHasConcurrencyToken)
+                         .Select(x => x.Entity as IHasConcurrencyToken))
+            {
+                entity.RowVersion = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+            }
+
             return await _factory.GetDbContext().SaveChangesAsync();
         }
         catch (DbUpdateConcurrencyException exception)
         {
-            Debug.WriteLine($"{exception.Message}");
+            throw new DatabaseException("DbUpdate Concurrency Exception", exception);
         }
         catch (DbUpdateException exception)
         {
-            Debug.WriteLine($"{exception.Message}");
+            throw new DatabaseException("DbUpdate Exception", exception);
         }
         catch (Exception exception)
         {
-            Debug.WriteLine($"{exception.Message}");
+            throw new DatabaseException("Db Exception", exception);
         }
-
-        return 0;
     }
 
     public void Commit()
@@ -89,7 +99,7 @@ public class EntityFrameworkCoreUnitOfWork : IEntityFrameworkCoreUnitOfWork
             _factory.GetDbContext().Database.CommitTransaction();
         }
     }
-    
+
     public async Task CommitAsync()
     {
         if (!_factory.GetDbContext().Database.IsInMemory())
@@ -105,7 +115,7 @@ public class EntityFrameworkCoreUnitOfWork : IEntityFrameworkCoreUnitOfWork
             _factory.GetDbContext().Database.RollbackTransaction();
         }
     }
-    
+
     public async Task RollbackAsync()
     {
         if (!_factory.GetDbContext().Database.IsInMemory())
