@@ -47,7 +47,6 @@ PS: After building the Kibana that it takes a while to start Kibana UI.
 - .NET Core: <https://docs.microsoft.com/en-us/dotnet/core>
 - ASP.NET Core: <https://docs.microsoft.com/en-us/aspnet/core>
 - MediatR: <https://github.com/jbogard/MediatR>
-- StackExchange.Redis: <https://github.com/StackExchange/StackExchange.Redis>
 - Serilog: <https://github.com/serilog/serilog>
 - NUnit: <https://github.com/nunit/nunit> | <https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-nunit>
 - Docker: <https://www.docker.com>
