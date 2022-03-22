@@ -12,14 +12,16 @@ Here are default ports:
 
 The project runs InMemory database as default. If you want to change that update Provider in "appsettings.Development.json".
 
-Provider:
+**Provider:**
 
 - InMemory
 - SqlServer
 
-PS: If you have a SqlServer and want to run on it please use docker-compose to run SqlServer on Docker or use your own database connection. After doing that please make sure that you updated the "DefaultConnection" in "appsettings.Development.json".
+**PS:** If you have a SqlServer and want to run on it please use docker-compose to run SqlServer on Docker or use your own database connection. After doing that please make sure that you updated the "DefaultConnection" in "appsettings.Development.json".
 
-### Database Migrations
+_**PS:** I have tried to run the whole application on Docker but there is a technical problem with the Apple Mac M1 (arm processor) so I couldn't test with SqlServer. You will see the commented parts on the Docker file related to SqlServer and Application._
+
+### Database Migrations.
 
 If you want to re-create the database migrations delete "SmartCharging.Infrastructure/Migrations" folder then run that command (in "source" directory) in terminal.
 
