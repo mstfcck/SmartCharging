@@ -5,11 +5,11 @@ using Shouldly;
 using SmartCharging.Application.ChargeStation.Commands.CreateChargeStation;
 using SmartCharging.Application.ChargeStation.Commands.UpdateChargeStation;
 using SmartCharging.Application.Group.Commands.CreateGroup;
-using SmartCharging.Application.UnitTests.Group;
 using SmartCharging.Core.Exceptions;
 
-namespace SmartCharging.Application.UnitTests.ChargeStation.ChargeStation;
+namespace SmartCharging.Application.UnitTests.ChargeStation;
 
+[TestFixture, Order(2)]
 public class UpdateChargeStationCommandTests : ApplicationTests
 {
     [TestCase("Group 1", 3, "ChargeStation 1")]
@@ -41,7 +41,7 @@ public class UpdateChargeStationCommandTests : ApplicationTests
     }
     
     [TestCase(0, 0, "Charge Station 1")]
-    public async Task UpdateChargeStationCommandNotFoundExceptionTest(int groupId, int chargeStationId, string chargeStationName)
+    public async Task UpdateChargeStationCommandChargeStationCouldNotBeFoundExceptionTest(int groupId, int chargeStationId, string chargeStationName)
     {
         var mediator = ServiceProvider.GetService<IMediator>();
 

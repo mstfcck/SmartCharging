@@ -7,8 +7,9 @@ using SmartCharging.Application.ChargeStation.Commands.DeleteChargeStation;
 using SmartCharging.Application.Group.Commands.CreateGroup;
 using SmartCharging.Core.Exceptions;
 
-namespace SmartCharging.Application.UnitTests.Group.ChargeStation;
+namespace SmartCharging.Application.UnitTests.ChargeStation;
 
+[TestFixture, Order(3)]
 public class DeleteChargeStationCommandTests : ApplicationTests
 {
     [TestCase("Group 1", 3, "ChargeStation 1")]
@@ -38,7 +39,7 @@ public class DeleteChargeStationCommandTests : ApplicationTests
     }
 
     [TestCase(0, 0)]
-    public async Task DeleteChargeStationCommandNotFoundChargeStationExceptionTest(int groupId, int chargeStationId)
+    public async Task DeleteChargeStationCommandChargeStationCouldNotBeFoundExceptionTest(int groupId, int chargeStationId)
     {
         var mediator = ServiceProvider.GetService<IMediator>();
 

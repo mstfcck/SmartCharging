@@ -4,10 +4,10 @@ using NUnit.Framework;
 using Shouldly;
 using SmartCharging.Application.ChargeStation.Commands.CreateChargeStation;
 using SmartCharging.Application.Group.Commands.CreateGroup;
-using SmartCharging.Application.UnitTests.Group;
 
-namespace SmartCharging.Application.UnitTests.ChargeStation.ChargeStation;
+namespace SmartCharging.Application.UnitTests.ChargeStation;
 
+[TestFixture, Order(1)]
 public class CreateChargeStationCommandTests : ApplicationTests
 {
     [TestCase("Group 1", 5, "Charge Station 1")]

@@ -6,6 +6,7 @@ using SmartCharging.Application.Group.Commands.CreateGroup;
 
 namespace SmartCharging.Application.UnitTests.Group;
 
+[TestFixture, Order(1)]
 public class CreateGroupCommandTests : ApplicationTests
 {
     [TestCase("Group 1", 5)]

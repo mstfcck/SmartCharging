@@ -7,9 +7,8 @@ using NUnit.Framework;
 using SmartCharging.Infrastructure;
 using SmartCharging.Infrastructure.Database;
 
-namespace SmartCharging.Application.UnitTests.Group;
+namespace SmartCharging.Application.UnitTests;
 
-[TestFixture]
 public class ApplicationTests
 {
     public ServiceProvider ServiceProvider { get; set; }

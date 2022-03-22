@@ -8,6 +8,7 @@ using SmartCharging.Core.Exceptions;
 
 namespace SmartCharging.Application.UnitTests.Group;
 
+[TestFixture, Order(3)]
 public class DeleteGroupCommandTests : ApplicationTests
 {
     [TestCase("Group 1", 5)]
@@ -30,7 +31,7 @@ public class DeleteGroupCommandTests : ApplicationTests
     }
 
     [TestCase(0)]
-    public async Task DeleteGroupCommandNotFoundGroupExceptionTest(int groupId)
+    public async Task DeleteGroupCommandGroupCouldNotBeFoundExceptionTest(int groupId)
     {
         var mediator = ServiceProvider.GetService<IMediator>();
 

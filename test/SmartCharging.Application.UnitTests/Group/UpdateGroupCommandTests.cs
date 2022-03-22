@@ -8,6 +8,7 @@ using SmartCharging.Core.Exceptions;
 
 namespace SmartCharging.Application.UnitTests.Group;
 
+[TestFixture, Order(2)]
 public class UpdateGroupCommandTests : ApplicationTests
 {
     [TestCase("Group 1", 5)]
@@ -39,7 +40,7 @@ public class UpdateGroupCommandTests : ApplicationTests
     }
     
     [TestCase(0, "Group 1", 5)]
-    public async Task UpdateGroupCommandNotFoundExceptionTest(int groupId, string groupName, int capacityInAmps)
+    public async Task UpdateGroupCommandGroupCouldNotBeFoundExceptionTest(int groupId, string groupName, int capacityInAmps)
     {
         var mediator = ServiceProvider.GetService<IMediator>();
 
