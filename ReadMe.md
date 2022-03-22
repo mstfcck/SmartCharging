@@ -69,9 +69,6 @@ PS: After building the Kibana that it takes a while to start Kibana UI.
 These patterns didn't apply in the application but can be useful for the approach.
 
 - Microservices: <https://microservices.io>
-- Backends for Frontends: <https://microservices.io/patterns/apigateway.html>
-- API Gateway: <https://microservices.io/patterns/apigateway.html>
-- Transactional Outbox: <https://microservices.io/patterns/data/transactional-outbox.html>
 - Health Check: <https://microservices.io/patterns/observability/health-check-api.html>
 - Unit Testing Best Practices: <https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-best-practices>
 
