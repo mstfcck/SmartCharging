@@ -5,16 +5,16 @@ using SmartCharging.Domain.Repositories;
 
 namespace SmartCharging.Application.ChargeStation.Commands.UpdateChargeStation;
 
-public class DeleteChargeStationCommandHandler : IRequestHandler<DeleteChargeStationCommand>
+public class UpdateChargeStationCommandHandler : IRequestHandler<UpdateChargeStationCommand>
 {
     private readonly IEntityFrameworkCoreUnitOfWork _unitOfWork;
 
-    public DeleteChargeStationCommandHandler(IEntityFrameworkCoreUnitOfWork unitOfWork)
+    public UpdateChargeStationCommandHandler(IEntityFrameworkCoreUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
     }
     
-    public async Task<Unit> Handle(DeleteChargeStationCommand request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(UpdateChargeStationCommand request, CancellationToken cancellationToken)
     {
         var chargeStation = await _unitOfWork.Repository<Domain.Entities.ChargeStation>().Read()
             .Where(x => x.Id == request.ByChargeStationId && x.GroupId == request.ByGroupId)

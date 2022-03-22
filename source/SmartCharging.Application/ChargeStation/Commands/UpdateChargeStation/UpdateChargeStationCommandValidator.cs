@@ -2,9 +2,9 @@ using FluentValidation;
 
 namespace SmartCharging.Application.ChargeStation.Commands.UpdateChargeStation;
 
-public class DeleteChargeStationCommandValidator : AbstractValidator<DeleteChargeStationCommand>
+public class UpdateChargeStationCommandValidator : AbstractValidator<UpdateChargeStationCommand>
 {
-    public DeleteChargeStationCommandValidator()
+    public UpdateChargeStationCommandValidator()
     {
         RuleFor(x => x.ByGroupId)
             .GreaterThan(0);

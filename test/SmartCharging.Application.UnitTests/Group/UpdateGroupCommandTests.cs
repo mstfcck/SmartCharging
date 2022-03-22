@@ -20,9 +20,6 @@ public class UpdateGroupCommandTests : ApplicationTests
 
         var createGroupCommand = new CreateGroupCommand(groupName, capacityInAmps);
 
-        createGroupCommand.Name.ShouldBe(groupName);
-        createGroupCommand.CapacityInAmps.ShouldBe(capacityInAmps);
-
         var responseCreateGroup = await mediator.Send(createGroupCommand);
 
         responseCreateGroup.ShouldNotBeNull();

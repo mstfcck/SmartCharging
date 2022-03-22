@@ -19,9 +19,4 @@
         <ProjectReference Include="..\..\source\SmartCharging.Core\SmartCharging.Core.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="ChargeStation" />
-      <Folder Include="Connector" />
-    </ItemGroup>
-
 </Project>

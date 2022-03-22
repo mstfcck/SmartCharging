@@ -18,12 +18,7 @@ public class DeleteGroupCommandTests : ApplicationTests
 
         mediator.ShouldNotBeNull();
 
-        var createGroupCommand = new CreateGroupCommand(groupName, capacityInAmps);
-
-        createGroupCommand.Name.ShouldBe(groupName);
-        createGroupCommand.CapacityInAmps.ShouldBe(capacityInAmps);
-
-        var responseCreateGroup = await mediator.Send(createGroupCommand);
+        var responseCreateGroup = await mediator.Send(new CreateGroupCommand(groupName, capacityInAmps));
 
         responseCreateGroup.ShouldNotBeNull();
 
