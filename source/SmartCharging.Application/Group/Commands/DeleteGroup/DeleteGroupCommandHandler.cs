@@ -27,7 +27,7 @@ public class DeleteGroupCommandHandler : IRequestHandler<DeleteGroupCommand>
 
         if (group == null)
         {
-            throw new BusinessException("Group could not be found.");
+            throw new BusinessException(ExceptionMessages.GroupCouldNotBeFound);
         }
 
         // PS: The transaction isn't worked while using a memory database.

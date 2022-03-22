@@ -22,7 +22,7 @@ public class CreateChargeStationCommandHandler : IRequestHandler<CreateChargeSta
 
         if (group == null)
         {
-            throw new BusinessException("Charge Station could not be found.");
+            throw new BusinessException(ExceptionMessages.ChargeStationCouldNotBeFound);
         }
 
         var chargeStation = new Domain.Entities.ChargeStation(request.Name, request.ByGroupId);

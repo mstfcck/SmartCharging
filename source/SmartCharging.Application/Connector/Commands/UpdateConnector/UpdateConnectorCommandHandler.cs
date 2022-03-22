@@ -25,7 +25,7 @@ public class UpdateConnectorCommandHandler : IRequestHandler<UpdateConnectorComm
 
         if (connector == null)
         {
-            throw new BusinessException("Connector could not be found.");
+            throw new BusinessException(ExceptionMessages.ConnectorCouldNotBeFound);
         }
 
         var group = await _unitOfWork.Repository<Domain.Entities.Group>().Read()
@@ -35,14 +35,14 @@ public class UpdateConnectorCommandHandler : IRequestHandler<UpdateConnectorComm
 
         if (group == null)
         {
-            throw new BusinessException("Group could not be found.");
+            throw new BusinessException(ExceptionMessages.GroupCouldNotBeFound);
         }
 
         if (group.CapacityInAmps < group.ChargeStations.Sum(x =>
                 x.Connectors.Where(z => z.Id != request.ByConnectorId).Sum(y => y.MaxCurrentInAmps) +
                 request.MaxCurrentInAmps))
         {
-            throw new BusinessException("The capacity in Amps of a Group is not enough.");
+            throw new BusinessException(ExceptionMessages.GroupCapacityIsNotEnough);
         }
 
         connector.Update(request.MaxCurrentInAmps);

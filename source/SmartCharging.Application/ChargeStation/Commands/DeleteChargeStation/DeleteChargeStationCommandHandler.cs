@@ -22,7 +22,7 @@ public class DeleteChargeStationCommandHandler : IRequestHandler<DeleteChargeSta
         
         if (chargeStation == null)
         {
-            throw new BusinessException("Charge Station could not be found.");
+            throw new BusinessException(ExceptionMessages.ChargeStationCouldNotBeFound);
         }
 
         // PS: The transaction isn't worked while using a memory database.

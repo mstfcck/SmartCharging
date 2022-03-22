@@ -24,16 +24,14 @@ public class UpdateGroupCommandHandler : IRequestHandler<UpdateGroupCommand>
 
         if (group == null)
         {
-            throw new BusinessException("Group could not be found.");
+            throw new BusinessException(ExceptionMessages.GroupCouldNotBeFound);
         }
 
         var currentCapacityInConnectors = group.ChargeStations.Sum(x => x.Connectors.Sum(y => y.MaxCurrentInAmps));
 
         if (request.CapacityInAmps < currentCapacityInConnectors)
         {
-            throw new BusinessException(
-                $"The capacity in Amps of a Group should always be great or equal to the sum of the Max current in Amps " +
-                $"of the Connector of all Charge Stations in the Group.'");
+            throw new BusinessException(ExceptionMessages.GroupMaxCapacityInAmps);
         }
 
         group.Update(request.Name, request.CapacityInAmps);

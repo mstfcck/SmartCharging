@@ -25,7 +25,7 @@ public class DeleteConnectorCommandHandler : IRequestHandler<DeleteConnectorComm
 
         if (connector == null)
         {
-            throw new BusinessException("Connector could not be found.");
+            throw new BusinessException(ExceptionMessages.ConnectorCouldNotBeFound);
         }
         
         // PS: The transaction isn't worked while using a memory database.

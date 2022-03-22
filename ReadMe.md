@@ -21,7 +21,7 @@ The project runs InMemory database as default. If you want to change that update
 
 _**PS:** I have tried to run the whole application on Docker but there is a technical problem with the Apple Mac M1 (arm processor) so I couldn't test with SqlServer. You will see the commented parts on the Docker file related to SqlServer and Application._
 
-### Database Migrations.
+### Database Migrations
 
 If you want to re-create the database migrations delete "SmartCharging.Infrastructure/Migrations" folder then run that command (in "source" directory) in terminal.
 
