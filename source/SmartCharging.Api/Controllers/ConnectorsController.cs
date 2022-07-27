@@ -40,7 +40,7 @@ public class ConnectorsController : ControllerBase
             MaxCurrentInAmps = request.MaxCurrentInAmps
         };
 
-        var result = _mediator.Send(command, cancellationToken);
+        var result = await _mediator.Send(command, cancellationToken);
         
         return new Response<CreateConnectorResponse>(new CreateConnectorResponse(result.Id));
     }

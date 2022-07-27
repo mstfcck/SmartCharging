@@ -80,6 +80,6 @@ public class ChargeStationsController : ControllerBase
         [FromRoute] int chargeStationId, 
         CancellationToken cancellationToken)
     {
-        await _mediator.Send(new UpdateChargeStationCommand(groupId, chargeStationId), cancellationToken);
+        await _mediator.Send(new DeleteChargeStationCommand(groupId, chargeStationId), cancellationToken);
     }
 }

@@ -1,8 +1,8 @@
 services:
 
-# Remove comment to start-up 'smart-charging-api' on docker.
-#   smart-charging-api:
-#     container_name: smart-charging-api
+# Remove comment to start-up 'docker-default-network' on docker.
+#   docker-default-network:
+#     container_name: docker-default-network
 #     build:
 #       context: .
 #       dockerfile: ./source/SmartCharging.Api/Dockerfile
@@ -32,7 +32,7 @@ services:
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - discovery.type=single-node
     networks:
-      - smart-charging-api
+      - docker-default-network
   
   kibana:
     container_name: kibana
@@ -44,10 +44,10 @@ services:
     environment:
       - ELASTICSEARCH_URL=http://localhost:9200
     networks:
-      - smart-charging-api
+      - docker-default-network
 
 networks:
-  smart-charging-api:
+  docker-default-network:
     driver: bridge
 
 volumes:
